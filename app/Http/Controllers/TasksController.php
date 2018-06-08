@@ -15,6 +15,7 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     
      public function index()
     {
         $tasks = Task::all();
@@ -23,6 +24,24 @@ class TasksController extends Controller
             'tasks' => $tasks,
         ]);
     }
+    // public function index()
+    // {
+    //     $data = [];
+    //     if (\Auth::check()) {
+    //         $user = \Auth::user();
+    //         $tasks = $user->tasks()->orderBy('created_at', 'desc')->paginate(10);
+
+    //         $data = [
+    //             'user' => $user,
+    //             'tasks' => $tasks,
+    //         ];
+    //         $data += $this->counts($user);
+    //         return view('tasks.show', $data);
+    //     }else {
+    //         return view('/');
+    //     }
+    // }
+
 
     /**
      * Show the form for creating a new resource.
@@ -46,17 +65,22 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $this->validate($request,[
             'status' => 'required|max:10',   // add
             'content' => 'required|max:191',
         ]);
         
+        $request->user()->tasks()->create([
+            'status' => $request->status,
+            'content' => $request->content,
+        ]);
         
-        $task = new Task;
+        
+     /*   $task = new Task;
         $task->status = $request->status;    // add
         $task->content = $request->content;
         $task->save();
-
+    */
         return redirect('/');
     }
 
