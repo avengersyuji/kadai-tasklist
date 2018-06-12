@@ -13,10 +13,10 @@
 
 Route::get('/', 'TasksController@index');
 
-/*Route::get('/', function () {
-    return view('welcome');
-});
-*/
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 Route::resource('tasks', 'TasksController');
 
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
@@ -28,5 +28,5 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 Route::group(['middleware' => ['auth']], function () {
     
-    Route::resource('tasks', 'TasksController', ['only' => ['store', 'destroy']]);
+    Route::resource('tasks', 'TasksController', ['only' => ['store', 'destroy', 'show' ,'index']]);
 });
