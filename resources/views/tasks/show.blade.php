@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@if (Auth::user()->id == $task->user_id)
+@if (Auth::id() == $task->user_id)
     <h1>id = {{ $task->id }} のTask詳細ページ</h1>
 
     <table class="table table-bordered">
@@ -25,5 +25,9 @@
     {!! Form::model($task, ['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
         {!! Form::submit('削除', ['class' => 'btn btn-danger'])  !!}
     {!! Form::close() !!}
+@else
+    <p>You Cannot Access Other's Task List</p>
 @endif
+
+
 @endsection
